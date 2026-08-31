@@ -28,14 +28,14 @@ class PrintJobApp {
   /**
    * Prompt the user for input and return their choice
    */
-  private getUserChoice(): string {
+  private getUserChoice(): Promise<string> {
     const readline = require('readline').createInterface({
       input: process.stdin,
       output: process.stdout
     });
 
     return new Promise<string>((resolve) => {
-      readline.question("Enter your choice: ", (answer) => {
+      readline.question("Enter your choice: ", (answer: string) => {
         readline.close();
         resolve(answer);
       });
@@ -52,13 +52,13 @@ class PrintJobApp {
     });
 
     const documentName = await new Promise<string>((resolve) => {
-      readline.question("Enter document name: ", (answer) => resolve(answer));
+      readline.question("Enter document name: ", (answer: string) => resolve(answer));
     });
 
     let pages: number;
     while (true) {
       const pagesInput = await new Promise<string>((resolve) => {
-        readline.question("Enter number of pages: ", (answer) => resolve(answer));
+        readline.question("Enter number of pages: ", (answer: string) => resolve(answer));
       });
       
       pages = parseInt(pagesInput, 10);
@@ -139,7 +139,7 @@ class PrintJobApp {
     });
 
     const jobId = await new Promise<string>((resolve) => {
-      readline.question("Enter job ID to cancel: ", (answer) => resolve(answer.trim()));
+      readline.question("Enter job ID to cancel: ", (answer: string) => resolve(answer.trim()));
     });
 
     readline.close();
